@@ -5,11 +5,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Main {
+  public class Main {
 
-  // Main method: JVM entry point
-  // This method starts the Spring Boot application
-  public static void main(String[] args) {
+    // Main method: JVM entry point
+    // This method starts the Spring Boot application
+    public static void main(String[] args) {
 
     // Boots the Spring application:
     // - creates the application context
@@ -18,3 +18,4 @@ public class Main {
     SpringApplication.run(Main.class, args);
   }
 }
+  

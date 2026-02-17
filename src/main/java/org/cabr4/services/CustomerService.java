@@ -34,6 +34,8 @@ public interface CustomerService {
    */
   Customer createCustomer(Customer customer);
 
+  Customer findById (Long id);
+
   /**
    * Updates an existing customer.
    *
@@ -44,7 +46,7 @@ public interface CustomerService {
    * @param customer the customer entity with updated information
    * @return the updated customer entity
    */
-  Customer updateCustomer(Customer customer);
+  Customer updateCustomer(Long id, Customer customer);
 
   /**
    * Deletes a customer by its unique identifier.

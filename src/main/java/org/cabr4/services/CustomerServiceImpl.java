@@ -1,6 +1,8 @@
 package org.cabr4.services;
 
 // Import of the Customer entity handled by this service
+import org.cabr4.exceptions.BadRequestException;
+import org.cabr4.exceptions.ResourceNotFoundException;
 import org.cabr4.model.Customer;
 
 // Repository responsible for persistence operations on Customer entities
@@ -8,6 +10,7 @@ import org.cabr4.repository.CustomerRepository;
 
 // Marks this class as a Spring service component
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 // Import for handling collections of Customer entities
 import java.util.List;
@@ -64,6 +67,11 @@ public class CustomerServiceImpl implements CustomerService {
     return customerRepository.save(customer);
   }
 
+  @Override
+  public Customer findById(Long id) {
+    return customerRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Customer not found"));
+  }
+
   /**
    * Updates an existing customer.
    *
@@ -74,8 +82,20 @@ public class CustomerServiceImpl implements CustomerService {
    * @return the updated Customer entity
    */
   @Override
-  public Customer updateCustomer(Customer customer) {
-    return customerRepository.save(customer);
+  public Customer updateCustomer(Long id, Customer customer) {
+
+    //ADD ALL PARAMS !!!!!!!!!!!!!!
+
+    Customer customerExist = customerRepository.findById(id).orElseThrow(() ->
+        new ResourceNotFoundException("Customer not found"));
+    customerExist.setName(customer.getName());
+    customerExist.setLastName(customer.getLastName());
+    customerExist.setAge(customer.getAge());
+    customerExist.setPhone(customer.getPhone());
+    customerExist.setEmail(customer.getEmail());
+    customerExist.setPassword(customer.getPassword());
+
+    return customerRepository.save(customerExist);
   }
 
   /**
@@ -88,6 +108,7 @@ public class CustomerServiceImpl implements CustomerService {
    */
   @Override
   public void deleteCustomer(Long id) {
+    customerRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Customer not found"));
     customerRepository.deleteById(id);
   }
 }

@@ -2,12 +2,15 @@
 package org.cabr4.controllers;
 
 // Import the Customer entity (data model)
+import jakarta.validation.Valid;
 import org.cabr4.model.Customer;
 
 // Import the service implementation that contains business logic
-import org.cabr4.services.CustomerServiceImpl;
+import org.cabr4.services.CustomerService;
 
 // Spring annotations for building REST APIs
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 // Utility for handling lists of objects
@@ -24,34 +27,49 @@ public class CustomerController {
 
   // Service layer dependency
   // 'final' ensures it is initialized only once (best practice)
-  private final CustomerServiceImpl customerService;
+  private final CustomerService customerService;
 
   // Constructor-based dependency injection
   // Spring injects CustomerServiceImpl automatically
-  public CustomerController(CustomerServiceImpl customersService) {
+  public CustomerController(CustomerService customersService) {
     this.customerService = customersService;
   }
 
   // Handles HTTP GET requests to /customers
   // Returns a list of all customers
   @GetMapping
-  public List<Customer> getCustomers() {
-    return customerService.getAllCustomers();
+  public ResponseEntity<List<Customer>> getCustomers() {
+    return ResponseEntity.ok(customerService.getAllCustomers());
   }
 
   // Handles HTTP POST requests to /customers
   // @RequestBody maps the incoming JSON to a Customer object
-  // Used to create a new customer
+  // Used to create a new customer;
   @PostMapping
-  public Customer save(@RequestBody Customer customer) {
-    return customerService.createCustomer(customer);
+  public ResponseEntity<Customer> create(@Valid @RequestBody Customer customer) {
+
+    Customer customerSaved = customerService.createCustomer(customer);
+
+    return ResponseEntity.status(HttpStatus.CREATED)
+        .body(customerSaved);
   }
 
   // Handles HTTP PUT requests to /customers
   // Used to update an existing customer
   // NOTE: method name has a typo -> "upadte"
-  @PutMapping
-  public Customer upadte(@RequestBody Customer customer) {
-    return customerService.updateCustomer(customer);
+  @PutMapping("/{id}")
+  public ResponseEntity<Customer> upadte(@PathVariable Long id, @Valid @RequestBody Customer customer) {
+
+    Customer updateCustomer = customerService.updateCustomer(id, customer);
+
+    return ResponseEntity.ok(updateCustomer);
+  }
+
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Void> delete_(@PathVariable Long id){
+
+    customerService.deleteCustomer(id);
+
+    return ResponseEntity.noContent().build();
   }
 }

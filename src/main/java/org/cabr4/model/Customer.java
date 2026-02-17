@@ -1,6 +1,12 @@
 package org.cabr4.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 /**
@@ -12,7 +18,7 @@ import lombok.*;
  * - It should not be exposed directly in the API (use DTOs instead).
  */
 @Entity
-@Table(name = "customers")
+@Table(name = "customer")
 @NoArgsConstructor
 @Getter
 @Setter
@@ -31,6 +37,8 @@ public class Customer {
   /**
    * Customer first name.
    */
+  @NotNull
+  @NotBlank
   private String name;
 
   /**
@@ -38,23 +46,33 @@ public class Customer {
    * Mapped explicitly to "last_name" column in the database.
    */
   @Column(name = "last_name")
+  @NotNull
+  @NotBlank
   private String lastName;
 
   /**
    * Contact phone number.
    */
+
+  @NotNull
+  @NotBlank
   private String phone;
 
   /**
    * Age stored as String for flexibility (e.g. "18", "unknown").
    * If numeric operations are required, consider using Integer instead.
    */
+  @NotNull
+  @NotBlank
   private String age;
 
   /**
    * Customer email address.
    * In real systems this should be unique and validated.
    */
+  @NotNull
+  @NotBlank
+  @Email
   private String email;
 
   /**
@@ -62,6 +80,9 @@ public class Customer {
    * Excluded from toString() to avoid leaking sensitive data in logs.
    */
   @ToString.Exclude
+  @NotNull
+  @NotBlank
+  @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
   private String password;
 
   /**
