@@ -42,11 +42,17 @@ public class CustomerController {
     return ResponseEntity.ok(customerService.getAllCustomers());
   }
 
+  @GetMapping("/{id}")
+  public ResponseEntity <Customer> findCustomerById(@PathVariable Long id) {
+    Customer findCustomer = customerService.findById(id);
+    return ResponseEntity.ok(findCustomer);
+  }
+
   // Handles HTTP POST requests to /customers
   // @RequestBody maps the incoming JSON to a Customer object
   // Used to create a new customer;
   @PostMapping
-  public ResponseEntity<Customer> create(@Valid @RequestBody Customer customer) {
+  public ResponseEntity<Customer> createCustomer(@Valid @RequestBody Customer customer) {
 
     Customer customerSaved = customerService.createCustomer(customer);
 
@@ -58,7 +64,7 @@ public class CustomerController {
   // Used to update an existing customer
   // NOTE: method name has a typo -> "upadte"
   @PutMapping("/{id}")
-  public ResponseEntity<Customer> upadte(@PathVariable Long id, @Valid @RequestBody Customer customer) {
+  public ResponseEntity<Customer> updateCustomer(@PathVariable Long id, @Valid @RequestBody Customer customer) {
 
     Customer updateCustomer = customerService.updateCustomer(id, customer);
 
@@ -66,7 +72,7 @@ public class CustomerController {
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<Void> delete_(@PathVariable Long id){
+  public ResponseEntity<Void> deleteCustomer(@PathVariable Long id){
 
     customerService.deleteCustomer(id);
 

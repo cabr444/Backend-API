@@ -18,7 +18,7 @@ import lombok.*;
  * - It should not be exposed directly in the API (use DTOs instead).
  */
 @Entity
-@Table(name = "customer")
+@Table(name = "customers") //Modify table
 @NoArgsConstructor
 @Getter
 @Setter
@@ -38,7 +38,7 @@ public class Customer {
    * Customer first name.
    */
   @NotNull
-  @NotBlank
+  @NotBlank (message = "The field name is empty, please enter data")
   private String name;
 
   /**
@@ -47,7 +47,7 @@ public class Customer {
    */
   @Column(name = "last_name")
   @NotNull
-  @NotBlank
+  @NotBlank (message = "The field last name is empty, please enter data")
   private String lastName;
 
   /**
@@ -55,7 +55,7 @@ public class Customer {
    */
 
   @NotNull
-  @NotBlank
+  @NotBlank (message = "The field phone is empty, please enter data")
   private String phone;
 
   /**
@@ -63,7 +63,7 @@ public class Customer {
    * If numeric operations are required, consider using Integer instead.
    */
   @NotNull
-  @NotBlank
+  @NotBlank (message = "The field is age empty, please enter data")
   private String age;
 
   /**
@@ -71,7 +71,7 @@ public class Customer {
    * In real systems this should be unique and validated.
    */
   @NotNull
-  @NotBlank
+  @NotBlank (message = "The field email is empty, please enter data")
   @Email
   private String email;
 
@@ -81,7 +81,7 @@ public class Customer {
    */
   @ToString.Exclude
   @NotNull
-  @NotBlank
+  @NotBlank(message = "The field password is empty, please enter data")
   @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
   private String password;
 

@@ -69,7 +69,7 @@ public class CustomerServiceImpl implements CustomerService {
 
   @Override
   public Customer findById(Long id) {
-    return customerRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Customer not found"));
+    return customerRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Customer with id" +id+ "not found"));
   }
 
   /**
@@ -87,7 +87,7 @@ public class CustomerServiceImpl implements CustomerService {
     //ADD ALL PARAMS !!!!!!!!!!!!!!
 
     Customer customerExist = customerRepository.findById(id).orElseThrow(() ->
-        new ResourceNotFoundException("Customer not found"));
+        new ResourceNotFoundException("Customer not found !"));
     customerExist.setName(customer.getName());
     customerExist.setLastName(customer.getLastName());
     customerExist.setAge(customer.getAge());
