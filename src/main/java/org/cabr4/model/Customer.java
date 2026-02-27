@@ -18,7 +18,7 @@ import lombok.*;
  * - It should not be exposed directly in the API (use DTOs instead).
  */
 @Entity
-@Table(name = "customers") //Modify table
+@Table(name = "customer") //Modify table
 @NoArgsConstructor
 @Getter
 @Setter
