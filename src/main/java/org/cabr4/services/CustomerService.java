@@ -1,16 +1,16 @@
 package org.cabr4.services;
 
-// Imports the Customer entity used by the service layer
-import org.cabr4.model.Customer;
+// Imports the User entity used by the service layer
+import org.cabr4.model.User;
 
-// Import for handling collections of Customer objects
+// Import for handling collections of User objects
 import java.util.List;
 
 /**
- * Service interface for managing Customer-related business operations.
+ * Service interface for managing User-related business operations.
  *
  * This interface defines the contract for the service layer, which
- * contains the business logic related to Customer entities.
+ * contains the business logic related to User entities.
  * Implementations of this interface should coordinate validation,
  * business rules, and interaction with the persistence layer.
  */
@@ -21,32 +21,32 @@ public interface CustomerService {
    *
    * @return a list containing all persisted customers
    */
-  List<Customer> getAllCustomers();
+  List<User> getAllCustomers();
 
   /**
-   * Creates and persists a new customer.
+   * Creates and persists a new user.
    *
    * This method may include business validations such as checking
    * required fields or enforcing unique constraints.
    *
-   * @param customer the customer entity to be created
-   * @return the persisted customer entity
+   * @param user the user entity to be created
+   * @return the persisted user entity
    */
-  Customer createCustomer(Customer customer);
+  User createCustomer(User user);
 
-  Customer findById (Long id);
+  User findById (Long id);
 
   /**
-   * Updates an existing customer.
+   * Updates an existing user.
    *
-   * Implementations should ensure that the customer exists
+   * Implementations should ensure that the user exists
    * before performing the update and apply any relevant
    * business rules.
    *
-   * @param customer the customer entity with updated information
-   * @return the updated customer entity
+   * @param user the user entity with updated information
+   * @return the updated user entity
    */
-  Customer updateCustomer(Long id, Customer customer);
+  User updateCustomer(Long id, User user);
 
   /**
    * Deletes a customer by its unique identifier.

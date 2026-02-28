@@ -1,9 +1,9 @@
 // Package where this controller class is located
 package org.cabr4.controllers;
 
-// Import the Customer entity (data model)
+// Import the User entity (data model)
 import jakarta.validation.Valid;
-import org.cabr4.model.Customer;
+import org.cabr4.model.User;
 
 // Import the service implementation that contains business logic
 import org.cabr4.services.CustomerService;
@@ -38,37 +38,37 @@ public class CustomerController {
   // Handles HTTP GET requests to /customers
   // Returns a list of all customers
   @GetMapping
-  public ResponseEntity<List<Customer>> getCustomers() {
+  public ResponseEntity<List<User>> getCustomers() {
     return ResponseEntity.ok(customerService.getAllCustomers());
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity <Customer> findCustomerById(@PathVariable Long id) {
-    Customer findCustomer = customerService.findById(id);
-    return ResponseEntity.ok(findCustomer);
+  public ResponseEntity <User> findCustomerById(@PathVariable Long id) {
+    User findUser = customerService.findById(id);
+    return ResponseEntity.ok(findUser);
   }
 
   // Handles HTTP POST requests to /customers
-  // @RequestBody maps the incoming JSON to a Customer object
-  // Used to create a new customer;
+  // @RequestBody maps the incoming JSON to a User object
+  // Used to create a new user;
   @PostMapping
-  public ResponseEntity<Customer> createCustomer(@Valid @RequestBody Customer customer) {
+  public ResponseEntity<User> createCustomer(@Valid @RequestBody User user) {
 
-    Customer customerSaved = customerService.createCustomer(customer);
+    User userSaved = customerService.createCustomer(user);
 
     return ResponseEntity.status(HttpStatus.CREATED)
-        .body(customerSaved);
+        .body(userSaved);
   }
 
   // Handles HTTP PUT requests to /customers
-  // Used to update an existing customer
+  // Used to update an existing user
   // NOTE: method name has a typo -> "upadte"
   @PutMapping("/{id}")
-  public ResponseEntity<Customer> updateCustomer(@PathVariable Long id, @Valid @RequestBody Customer customer) {
+  public ResponseEntity<User> updateCustomer(@PathVariable Long id, @Valid @RequestBody User user) {
 
-    Customer updateCustomer = customerService.updateCustomer(id, customer);
+    User updateUser = customerService.updateCustomer(id, user);
 
-    return ResponseEntity.ok(updateCustomer);
+    return ResponseEntity.ok(updateUser);
   }
 
   @DeleteMapping("/{id}")
