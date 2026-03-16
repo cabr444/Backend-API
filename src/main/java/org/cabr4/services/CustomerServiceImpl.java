@@ -1,22 +1,24 @@
 package org.cabr4.services;
 
-// Import of the User entity handled by this service
+// Import of the Customer entity handled by this service
+import org.cabr4.exceptions.BadRequestException;
 import org.cabr4.exceptions.ResourceNotFoundException;
-import org.cabr4.model.User;
+import org.cabr4.model.Customer;
 
-// Repository responsible for persistence operations on User entities
+// Repository responsible for persistence operations on Customer entities
 import org.cabr4.repository.CustomerRepository;
 
 // Marks this class as a Spring service component
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
-// Import for handling collections of User entities
+// Import for handling collections of Customer entities
 import java.util.List;
 
 /**
- * Service implementation for managing User-related operations.
+ * Service implementation for managing Customer-related operations.
  *
- * This class contains the business logic for User entities and
+ * This class contains the business logic for Customer entities and
  * acts as a bridge between the controller layer and the data access
  * layer (CustomerRepository).
  */
@@ -24,7 +26,7 @@ import java.util.List;
 public class CustomerServiceImpl implements CustomerService {
 
   /**
-   * Repository used to perform CRUD operations on User entities.
+   * Repository used to perform CRUD operations on Customer entities.
    * Declared as final to ensure immutability and promote best practices.
    */
   private final CustomerRepository customerRepository;
@@ -35,7 +37,7 @@ public class CustomerServiceImpl implements CustomerService {
    * Spring automatically injects an instance of CustomerRepository
    * when creating this service bean.
    *
-   * @param customerRepository the repository used for User persistence
+   * @param customerRepository the repository used for Customer persistence
    */
   public CustomerServiceImpl(CustomerRepository customerRepository) {
     this.customerRepository = customerRepository;
@@ -44,56 +46,56 @@ public class CustomerServiceImpl implements CustomerService {
   /**
    * Retrieves all customers from the database.
    *
-   * @return a list containing all persisted User entities
+   * @return a list containing all persisted Customer entities
    */
   @Override
-  public List<User> getAllCustomers() {
+  public List<Customer> getAllCustomers() {
     return customerRepository.findAll();
   }
 
   /**
-   * Creates and persists a new user.
+   * Creates and persists a new customer.
    *
    * This method may include business validations before saving
    * the entity to the database.
    *
-   * @param user the User entity to be created
-   * @return the persisted User entity
+   * @param customer the Customer entity to be created
+   * @return the persisted Customer entity
    */
   @Override
-  public User createCustomer(User user) {
-    return customerRepository.save(user);
+  public Customer createCustomer(Customer customer) {
+    return customerRepository.save(customer);
   }
 
   @Override
-  public User findById(Long id) {
-    return customerRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User with id" +id+ "not found"));
+  public Customer findById(Long id) {
+    return customerRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Customer with id" +id+ "not found"));
   }
 
   /**
-   * Updates an existing user.
+   * Updates an existing customer.
    *
-   * Implementations may verify the existence of the user
+   * Implementations may verify the existence of the customer
    * and apply additional business rules before persisting changes.
    *
-   * @param user the User entity containing updated data
-   * @return the updated User entity
+   * @param customer the Customer entity containing updated data
+   * @return the updated Customer entity
    */
   @Override
-  public User updateCustomer(Long id, User user) {
+  public Customer updateCustomer(Long id, Customer customer) {
 
     //ADD ALL PARAMS !!!!!!!!!!!!!!
 
-    User userExist = customerRepository.findById(id).orElseThrow(() ->
-        new ResourceNotFoundException("User not found !"));
-    userExist.setName(user.getName());
-    userExist.setLastName(user.getLastName());
-    userExist.setAge(user.getAge());
-    userExist.setPhone(user.getPhone());
-    userExist.setEmail(user.getEmail());
-    userExist.setPassword(user.getPassword());
+    Customer customerExist = customerRepository.findById(id).orElseThrow(() ->
+        new ResourceNotFoundException("Customer not found !"));
+    customerExist.setName(customer.getName());
+    customerExist.setLastName(customer.getLastName());
+    customerExist.setAge(customer.getAge());
+    customerExist.setPhone(customer.getPhone());
+    customerExist.setEmail(customer.getEmail());
+    customerExist.setPassword(customer.getPassword());
 
-    return customerRepository.save(userExist);
+    return customerRepository.save(customerExist);
   }
 
   /**
@@ -102,11 +104,11 @@ public class CustomerServiceImpl implements CustomerService {
    * Implementations may validate the existence of the customer
    * or enforce business constraints prior to deletion.
    *
-   * @param id the unique identifier of the User to be deleted
+   * @param id the unique identifier of the Customer to be deleted
    */
   @Override
   public void deleteCustomer(Long id) {
-    customerRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found"));
+    customerRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Customer not found"));
     customerRepository.deleteById(id);
   }
 }

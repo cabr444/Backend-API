@@ -6,8 +6,6 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-
-import javax.management.relation.Role;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,7 +18,8 @@ import java.util.Set;
  * - It should not be exposed directly in the API (use DTOs instead).
  */
 @Entity
-@Table(name = "user") //Modify table
+@Table(name = "users") //Modify table
+@Inheritance(strategy = InheritanceType.JOINED)
 @NoArgsConstructor
 @Getter
 @Setter
@@ -41,7 +40,7 @@ public class User {
    */
   @NotNull
   @NotBlank (message = "The field name is empty, please enter data")
-  private String name;
+  protected String name;
 
   /**
    * User last name.
@@ -50,7 +49,7 @@ public class User {
   @Column(name = "last_name")
   @NotNull
   @NotBlank (message = "The field last name is empty, please enter data")
-  private String lastName;
+  protected String lastName;
 
   /**
    * Contact phone number.
@@ -58,7 +57,7 @@ public class User {
 
   @NotNull
   @NotBlank (message = "The field phone is empty, please enter data")
-  private String phone;
+  protected String phone;
 
   /**
    * Age stored as String for flexibility (e.g. "18", "unknown").
@@ -66,7 +65,7 @@ public class User {
    */
   @NotNull
   @NotBlank (message = "The field is age empty, please enter data")
-  private String age;
+  protected String age;
 
   /**
    * User email address.
@@ -75,7 +74,7 @@ public class User {
   @NotNull
   @NotBlank (message = "The field email is empty, please enter data")
   @Email
-  private String email;
+  protected String email;
 
   /**
    * Hashed password.
@@ -87,7 +86,7 @@ public class User {
   @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
   private String password;
 
-  @ElementCollection(fetch = FetchType.EAGER)
+  @ElementCollection(fetch = FetchType.LAZY)
   @Enumerated(EnumType.STRING)
   private Set<Role> roles = new HashSet<>();
 
